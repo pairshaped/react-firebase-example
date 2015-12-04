@@ -1,0 +1,13 @@
+{
+  "firebase": "scorching-torch-4538",
+  "public": "build",
+  "ignore": [
+    "**/.*",
+    "README.md",
+    "app",
+    "firebase.json",
+    "**/node_modules/**",
+    "package.json",
+    "webpack.config.js"
+  ]
+}
