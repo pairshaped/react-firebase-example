@@ -41,7 +41,9 @@ App = Component.create
     div className: 'app',
       h1 className: 'header',
         'Todo List'
-      List items: @state.items
+      List
+        items: @state.items
+        removeItem: @removeItem
       form onSubmit: @handleSubmit,
         input
           className: 'add-item__input'

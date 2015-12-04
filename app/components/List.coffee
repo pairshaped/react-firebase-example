@@ -6,7 +6,7 @@ List = Component.create
   displayName: 'List'
 
   render: ->
-    { items } = @props
+    { items, removeItem } = @props
 
     items = [] unless items?
 
@@ -15,6 +15,7 @@ List = Component.create
         Item
           key: idx
           item: item
+          removeItem: removeItem
 
 
 module.exports = List
