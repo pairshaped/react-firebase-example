@@ -41,14 +41,12 @@ module.exports = {
 
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Todo List'
+      template: 'app/index.html',
+      inject: 'body'
     }),
     new Webpack.HotModuleReplacementPlugin(),
     new Webpack.ProvidePlugin({
       'React': 'react',
-      'ReactDOM': 'react-dom',
-      //'Firebase': 'firebase',
-      'ReactFireMixin': 'reactfire',
       'Component': path.resolve('.', 'app', 'lib', 'Component.coffee')
     })
   ]

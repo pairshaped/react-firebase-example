@@ -1,4 +1,4 @@
-{ ul, li } = React.DOM
+{ ul } = React.DOM
 
 Item = require './Item'
 
@@ -15,5 +15,6 @@ List = Component.create
         Item
           key: idx
           item: item
+
 
 module.exports = List

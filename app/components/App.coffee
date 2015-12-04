@@ -3,12 +3,14 @@
 List = require './List'
 
 Firebase = require 'firebase'
-firebaseUrl = 'https://scorching-torch-4538.firebaseio.com/'
+ReactFireMixin = require 'reactfire'
 
 App = Component.create
   displayName: 'App'
 
   mixins: [ReactFireMixin]
+
+  firebaseUrl: 'https://scorching-torch-4538.firebaseio.com/'
 
   getInitialState: ->
     items: []
@@ -32,19 +34,21 @@ App = Component.create
     @firebaseRefs.items.child(key).remove()
 
   componentWillMount: ->
-    ref = new Firebase("#{firebaseUrl}items")
+    ref = new Firebase("#{@firebaseUrl}items")
     @bindAsArray(ref, 'items')
 
   render: ->
     div className: 'app',
-      h1 {},
+      h1 className: 'header',
         'Todo List'
       List items: @state.items
       form onSubmit: @handleSubmit,
         input
+          className: 'add-item__input'
           onChange: @handleChange
           value: @state.text
-        button {},
+        button className: 'add-item__button',
           'Add Item'
+
 
 module.exports = App
