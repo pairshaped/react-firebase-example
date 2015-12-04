@@ -13,8 +13,19 @@ App = Component.create
   firebaseUrl: 'https://scorching-torch-4538.firebaseio.com/'
 
   getInitialState: ->
+    uid: null
     items: []
     text: ''
+
+  handleAuth: (auth) ->
+    if auth?
+      # console.log 'Logged In', auth
+      @setState
+        uid: auth.uid
+    else
+      # console.log "Logged Out"
+      @setState
+        uid: null
 
   handleChange: (e) ->
     @setState
@@ -23,7 +34,7 @@ App = Component.create
   handleSubmit: (e) ->
     e.preventDefault()
     if @state.text?
-      console.log 'add', @state.text
+      # console.log 'add', @state.text
       @firebaseRefs.items.push
         text: @state.text
       @setState
@@ -36,11 +47,31 @@ App = Component.create
   componentWillMount: ->
     ref = new Firebase("#{@firebaseUrl}items")
     @bindAsArray(ref, 'items')
+    @baseRef = new Firebase(@firebaseUrl)
+    @baseRef.onAuth @handleAuth
+
+  login: ->
+    # @baseRef.authWithOAuthPopup 'google', -> null
+    @baseRef.authWithOAuthRedirect 'google', @handleAuth
+
+  logout: ->
+    @baseRef.unauth()
+
 
   render: ->
     div className: 'app',
       h1 className: 'header',
         'Todo List'
+      if @state.uid?
+        button
+          className: 'logout'
+          onClick: @logout
+          'Logout'
+      else
+        button
+          className: 'login'
+          onClick: @login
+          'Login'
       List
         items: @state.items
         removeItem: @removeItem
